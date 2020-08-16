@@ -3,9 +3,9 @@ ddns-update-style interim;
 default-lease-time 14400;
 max-lease-time 14400;
 
-	option routers                  {{ dhcp.router }};
-	option broadcast-address        {{ dhcp.bcast }};
-	option subnet-mask              {{ dhcp.netmask }};
+	option routers                  {{ network.router }};
+	option broadcast-address        {{ network.bcast }};
+	option subnet-mask              {{ network.netmask }};
 	option domain-name-servers      {{ helper.ipaddr }};
 	option domain-name              "{{ dns.clusterid }}.{{ dns.domain | lower }}";
 	option domain-search            "{{ dns.clusterid }}.{{ dns.domain | lower }}", "{{ dns.domain | lower }}";
@@ -32,11 +32,11 @@ max-lease-time 14400;
 		# this will not give out addresses to hosts not listed above
 		deny unknown-clients;
 
-		# this is PXE specific  
+		# this is PXE specific
 {% if ppc64le is sameas true %}
-		filename "boot/grub2/powerpc-ieee1275/core.elf";  
+		filename "boot/grub2/powerpc-ieee1275/core.elf";
 {% else %}
-		filename "pxelinux.0";  
+		filename "pxelinux.0";
 {% endif %}
 
 		next-server {{ helper.ipaddr }};
