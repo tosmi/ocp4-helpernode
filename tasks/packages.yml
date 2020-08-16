@@ -1,0 +1,16 @@
+- name: Install needed packages
+  package:
+    name: "{{ packages }}"
+    state: present
+
+- name: Install packages for DHCP/PXE install
+  package:
+    name: "{{ dhcppkgs }}"
+    state: present
+  when: not staticips
+
+- name: Install additional package for Intel platforms
+  package:
+    name: "{{ syslinuxpkgs }}"
+    state: present
+  when: not staticips and not ppc64le
