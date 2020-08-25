@@ -1,4 +1,4 @@
-{% if pxe is defined and pxe is true %}
+{% if pxe is defined and pxe == true %}
   {% set ipconfig = item.ipaddr + "::" + network.router + ":" + network.netmask + ":" + item.name + ":" + item.ifname + ":none" %}
   {% set ipconfig = ipconfig + " nameserver=" + network.nameserver %}
 {% else %}
