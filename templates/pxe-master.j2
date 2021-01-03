@@ -1,6 +1,9 @@
-{% if pxe is defined and pxe == true %}
+{% if item.ipaddr is defined and item.ifname is defined %}
   {% set ipconfig = item.ipaddr + "::" + network.router + ":" + network.netmask + ":" + item.name + ":" + item.ifname + ":none" %}
-  {% set ipconfig = ipconfig + " nameserver=" + network.nameserver %}
+  {% set ipconfig = ipconfig + " nameserver=" + dns.forwarder1 %}
+  {% if dns.forwarder2 is defined %}
+    {% set ipconfig = ipconfig + " nameserver=" + dns.forwarder2 %}
+  {% endif %}
 {% else %}
   {% set ipconfig = "dhcp" %}
 {% endif %}
